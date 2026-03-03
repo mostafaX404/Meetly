@@ -7,6 +7,9 @@ using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+[ApiController]
+[Route("api/[controller]")]
+
 public class AccountController(AppDbContext context , ITokenService tokenService) : BaseApiController
 {
 
