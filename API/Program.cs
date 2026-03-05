@@ -48,7 +48,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 var app = builder.Build();
-
+app.UseMiddleware<ExceptionMiddleware>();
 // ✅ Use CORS
 app.UseCors("AllowAngular");
 

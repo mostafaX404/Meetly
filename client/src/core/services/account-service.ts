@@ -9,7 +9,7 @@ export class AccountService {
   
   private http = inject(HttpClient);
   currentUser = signal<User | null>(null);
-  baseUrl = "https://localhost:5001/api/"
+ baseUrl = "https://localhost:5001/api/"
 
   register(creds : RegisterCreds){
     return this.http.post<User>(this.baseUrl+"account/register",creds).pipe(
