@@ -7,36 +7,39 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    
-    public class MembersController(AppDbContext context) : BaseApiController
+    [Authorize]
+    public class MembersController(IMemberRepository memberRepository) : BaseApiController
     {
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<AppUser>>> GetMembers()
+        public async Task<ActionResult<IReadOnlyList<Member>>> GetMembers()
         {
-            var users = await context.Users.ToListAsync();
-
-            return users;
+            return Ok(await memberRepository.GetMembersAsync());
         }
 
         [HttpGet("check")]
-        public async Task<IActionResult> Check()
-        {
-            var count = await context.Users.CountAsync();
-            return Ok(new { Count = count });
-        }
 
-        [Authorize]
+        // public async Task<IActionResult> Check()
+        // {
+        //     var count = await context.Users.CountAsync();
+        //     return Ok(new { Count = count });
+        // }
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetMember(string id)
+        public async Task<ActionResult<Member>> GetMember(string id)
         {
-            var user = await context.Users.FindAsync(id);
+            var member = await memberRepository.GetMemberByIdAsync(id);
 
-            if (user == null) return NotFound();
+            if (member == null) return NotFound();
 
-            return user;
+            return member;
         }
 
+        [HttpGet("{id}/photos")]
+        public async Task<ActionResult<IReadOnlyList<Photo>>> GetMemberPhoto(string id)
+        {
+            return Ok(await memberRepository.GetPhotosForMemberAsync(id));
+        }
 
     }
 
