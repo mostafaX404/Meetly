@@ -1,7 +1,9 @@
 using System.Text;
 using API.Data;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SQLitePCL;
 
@@ -29,6 +31,17 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddScoped<ITokenService , TokenService>();
 builder.Services.AddScoped<IMemberRepository, MemberReopsitory>();
+builder.Services.AddScoped<IPhotoService,PhotoService>();
+builder.Services.Configure<CloudinarySettings>(
+    builder.Configuration.GetSection("CloudinarySettings"));
+
+builder.Services.AddSingleton(sp =>
+{
+    var config = sp.GetRequiredService<IOptions<CloudinarySettings>>().Value;
+    var account = new Account(config.CloudName, config.ApiKey, config.ApiSecret);
+    return new Cloudinary(account);
+});
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -73,3 +86,11 @@ catch (Exception ex)
 }
 
 app.Run();
+
+internal class CloudinarySettings
+{
+        public string CloudName { get; set; }
+    public string ApiKey { get; set; }
+    public string ApiSecret { get; set; }
+
+}
