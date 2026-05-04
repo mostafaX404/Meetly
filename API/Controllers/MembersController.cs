@@ -89,6 +89,7 @@ namespace API.Controllers
                 member.User.ImageUrl = photo.URL;
             }
 
+            
             member.Photos.Add(photo);
 
             if (await memberRepository.SaveAllAsync()) return photo;

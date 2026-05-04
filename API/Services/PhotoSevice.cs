@@ -12,6 +12,8 @@ public class PhotoService : IPhotoService
     }
     public async Task<ImageUploadResult> UploadPhotoAsync(IFormFile file)
     {
+
+
         var result = new ImageUploadResult();
 
          if (file.Length == 0)

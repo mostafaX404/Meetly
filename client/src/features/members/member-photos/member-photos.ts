@@ -14,9 +14,9 @@ import { DeleteButton } from "../../../shared/delete-button/delete-button";
   templateUrl: './member-photos.html',
   styleUrl: './member-photos.css',
 })
-export class MemberPhotos implements OnInit{
+export class MemberPhotos implements OnInit {
   protected memberService = inject(MemberService)
-protected accountService = inject(AccountService)
+  protected accountService = inject(AccountService)
   private router = inject(ActivatedRoute)
   protected photos = signal<Photo[]>([]);
   protected loading = signal<boolean>(false);
@@ -26,8 +26,8 @@ protected accountService = inject(AccountService)
 
 
   ngOnInit(): void {
-       const id = this.router.parent?.snapshot.paramMap.get('id');
-    if(id){
+    const id = this.router.parent?.snapshot.paramMap.get('id');
+    if (id) {
       this.memberService.getMemberPhotos(id).subscribe({
         next: p => this.photos.set(p)
       });
@@ -35,42 +35,65 @@ protected accountService = inject(AccountService)
   }
 
   onUploadImage(file: File) {
-  this.loading.set(true);
-  this.memberService.uploadPhoto(file).subscribe({
-    next: photo => {
-      this.memberService.editMode.set(false);
-      this.loading.set(false);
-      this.photos.update(photos => [...photos, photo])
-    },
-    error: error => {
-      console.log('Error uploading image: ', error);
-      this.loading.set(false);
-    }
-  })
-}
+    this.loading.set(true);
+    this.memberService.uploadPhoto(file).subscribe({
+      next: photo => {
+  this.memberService.editMode.set(false);
+  this.loading.set(false);
 
-setMainPhoto(photo: Photo) {
-  this.memberService.setMainPhoto(photo).subscribe({
-    next: () => {
-      const currentUser = this.accountService.currentUser();
-      if (currentUser) currentUser.imageUrl = photo.url;
-      this.accountService.setCurrentUser(currentUser as User);
-      this.memberService.member.update(member => ({
+  this.photos.update(photos => [...photos, photo]);
+
+  if (this.accountService.currentUser()?.imageUrl == null) {
+
+    const user = this.accountService.currentUser();
+    if (user) {
+      this.accountService.setCurrentUser({
+        ...user,
+        imageUrl: photo.url
+      });
+    }
+
+    this.memberService.member.update(member => {
+      if (!member) return member;
+
+      return {
         ...member,
         imageUrl: photo.url
-      }) as Member)
-    }
-  })
+      };
+    });
+  }
 }
+        
+      ,
+      error: error => {
+        console.log('Error uploading image: ', error);
+        this.loading.set(false);
+      }
+    })
+  }
+
+  setMainPhoto(photo: Photo) {
+    this.memberService.setMainPhoto(photo).subscribe({
+      next: () => {
+        const currentUser = this.accountService.currentUser();
+        if (currentUser) currentUser.imageUrl = photo.url;
+        this.accountService.setCurrentUser(currentUser as User);
+        this.memberService.member.update(member => ({
+          ...member,
+          imageUrl: photo.url
+        }) as Member)
+      }
+    })
+  }
 
 
-deletePhoto(photoId: number) {
-  this.memberService.deletePhoto(photoId).subscribe({
-    next: () => {
-      this.photos.update(photos => photos.filter(x => x.id !== photoId))
-    }
-  })
-}
+  deletePhoto(photoId: number) {
+    this.memberService.deletePhoto(photoId).subscribe({
+      next: () => {
+        this.photos.update(photos => photos.filter(x => x.id !== photoId))
+      }
+    })
+  }
 
 
 }
