@@ -1,9 +1,10 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { AccountService } from './account-service';
-import { EditableMember, Member, Photo } from '../../types/member';
+import { EditableMember, Member, MemberParams, Photo } from '../../types/member';
 import { tap } from 'rxjs';
+import { PaginationResult } from '../../types/Pagination';
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +16,27 @@ export class MemberService {
   private accountService = inject(AccountService)
   editMode = signal(false);
   member = signal<Member | null>(null);
+  
+getMembers(memberParams: MemberParams) {
+    let params = new HttpParams();
 
-  getMembers() {
-    return this.http.get<Member[]>(this.baseUrl + "members")
-  }
+    params = params.append('pageNumber', memberParams.pageNumber);
+    params = params.append('pageSize', memberParams.pageSize);
+    params = params.append('minAge', memberParams.minAge);
+    params = params.append('maxAge', memberParams.maxAge);
+    params = params.append('orderBy', memberParams.orderBy);
+    
+    if (memberParams.gender) {
+        params = params.append('gender', memberParams.gender);
+    }
 
+    return this.http.get<PaginationResult<Member>>(this.baseUrl + 'members', {params}).pipe(tap(()=>{
+      
+      localStorage.setItem('filters',JSON.stringify(memberParams))
+
+    }
+    ));
+}
 
   getMember(id: string) {
     return this.http.get<Member>(this.baseUrl + "members/" + id).pipe(tap(
@@ -43,13 +60,13 @@ export class MemberService {
     return this.http.post<Photo>(this.baseUrl + 'members/add-photo', formData);
   }
 
-  setMainPhoto(photo:Photo){
-    return this.http.put(this.baseUrl + `members/set-main-image/${photo.id}`,{});
+  setMainPhoto(photo: Photo) {
+    return this.http.put(this.baseUrl + `members/set-main-image/${photo.id}`, {});
   }
 
 
   deletePhoto(photoId: number) {
-  return this.http.delete(this.baseUrl + `members/delete-photo/${photoId}`);
-}
+    return this.http.delete(this.baseUrl + `members/delete-photo/${photoId}`);
+  }
 
 }

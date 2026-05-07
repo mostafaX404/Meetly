@@ -1,29 +1,37 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpEvent, HttpInterceptorFn, HttpParams } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { BusyService } from '../services/busy-service';
 import { delay, finalize, of, tap } from 'rxjs';
 
-const cash = new Map<string,any>();
+const cache = new Map<string,HttpEvent<unknown>>();
 
 export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
   
   const  busyService = inject(BusyService)
-if(req.method == "GET"){
 
-  const cashresult = cash.get(req.url)
 
-  if(cashresult){
-    return of(cashresult)
-  }
-
+const generateCacheKey = (url: string, params: HttpParams): string => {
+  const paramString = params.keys().map(key => `${key}=${params.get(key)}`).join('&');
+  return paramString ? `${url}?${paramString}` : url;
 }
+
+const cacheKey = generateCacheKey(req.url, req.params);
+
+if (req.method === 'GET') {
+  const cachedResponse = cache.get(cacheKey);
+  if (cachedResponse) {
+    return of(cachedResponse);
+  }
+}
+
+
   
   busyService.Busy();
 
   return next(req).pipe(
     delay(500),
     tap(result=>{
-      cash.set(req.url,result)
+      cache.set(cacheKey,result)
     })
     ,
     finalize(()=>{

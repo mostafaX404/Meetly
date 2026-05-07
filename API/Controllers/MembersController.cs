@@ -12,19 +12,17 @@ namespace API.Controllers
     public class MembersController(IMemberRepository memberRepository, IPhotoService photoService) : BaseApiController
     {
 
-        [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Member>>> GetMembers()
+        [HttpGet()]
+        public async Task<ActionResult<IReadOnlyList<Member>>> GetMembers([FromQuery] MemberParams memberParams)
         {
-            return Ok(await memberRepository.GetMembersAsync());
+            Console.WriteLine(memberParams);
+            memberParams.CurrentMemberId = User.GetMemberId();
+            
+            return Ok(await memberRepository.GetMembersAsync(memberParams));
         }
 
-        [HttpGet("check")]
 
-        // public async Task<IActionResult> Check()
-        // {
-        //     var count = await context.Users.CountAsync();
-        //     return Ok(new { Count = count });
-        // }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Member>> GetMember(string id)
