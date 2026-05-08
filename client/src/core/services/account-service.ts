@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { Inject, inject, Injectable, signal } from '@angular/core';
 import { RegisterCreds, User } from '../../types/User';
 import { tap } from 'rxjs';
+import { LikesService } from './likes-service';
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
   
   private http = inject(HttpClient);
+  private likeService = inject(LikesService)
   currentUser = signal<User | null>(null);
  baseUrl = "https://localhost:5001/api/"
 
@@ -33,12 +35,14 @@ export class AccountService {
 
 setCurrentUser(user:User){
     localStorage.setItem("user",JSON.stringify(user))
-        this.currentUser.set(user)
+    this.currentUser.set(user)
+    this.likeService.getLikeIds()
 }
 
 logout() {
   localStorage.removeItem("user")
   localStorage.removeItem("filters")
+  this.likeService.clearLikeIds()
   this.currentUser.set(null);
 }
 

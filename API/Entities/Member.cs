@@ -20,6 +20,11 @@ public class Member
 [JsonIgnore]
     public List<Photo> Photos { get; set; } = [];
 
+    [JsonIgnore]
+    public List<MemberLikes> LikedByMembers { get; set; } = [];
+    [JsonIgnore]
+    public List<MemberLikes> LikedMembers { get; set; } = [];
+
     //Nav Prop.
     [JsonIgnore]
     [ForeignKey(nameof(Id))]

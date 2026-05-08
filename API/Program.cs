@@ -33,6 +33,7 @@ builder.Services.AddScoped<ITokenService , TokenService>();
 builder.Services.AddScoped<IMemberRepository, MemberReopsitory>();
 builder.Services.AddScoped<IPhotoService,PhotoService>();
 builder.Services.AddScoped<UserLastActiveLogger>();
+builder.Services.AddScoped<ILikeRepository,LikeRepository>();
 builder.Services.Configure<CloudinarySettings>(
     builder.Configuration.GetSection("CloudinarySettings"));
 
