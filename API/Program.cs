@@ -1,5 +1,6 @@
 using System.Text;
 using API.Data;
+using API.Interfaces;
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,7 @@ builder.Services.AddScoped<IMemberRepository, MemberReopsitory>();
 builder.Services.AddScoped<IPhotoService,PhotoService>();
 builder.Services.AddScoped<UserLastActiveLogger>();
 builder.Services.AddScoped<ILikeRepository,LikeRepository>();
+builder.Services.AddScoped<IMessageRepository,MessageRepository>();
 builder.Services.Configure<CloudinarySettings>(
     builder.Configuration.GetSection("CloudinarySettings"));
 

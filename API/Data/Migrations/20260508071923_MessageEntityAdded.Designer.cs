@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260508071923_MessageEntityAdded")]
+    partial class MessageEntityAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.10");
@@ -104,38 +107,34 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("Message", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("SenderId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RecipientId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("DateRead")
+                    b.Property<DateTime>("DateRead")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("MessageSent")
+                    b.Property<DateTime>("DateSent")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("RecipientDelete")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("RecipientId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("SenderDelete")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("SenderId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
+                    b.HasKey("SenderId", "RecipientId");
 
                     b.HasIndex("RecipientId");
-
-                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });
