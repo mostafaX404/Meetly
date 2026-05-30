@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
 import { AccountService } from '../../core/services/account-service';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-test-errors',
@@ -13,7 +14,7 @@ export class TestErrors {
 
   private http = inject(HttpClient);
   private accountService = inject(AccountService);
-  baseUrl = "https://localhost:5001/api/"
+  baseUrl  = environment.baseUrl
   validationErrors = signal<string[]>([]);
   
    get404Error(){

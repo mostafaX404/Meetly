@@ -5,6 +5,7 @@ import { tap } from 'rxjs';
 import { LikesService } from './likes-service';
 import { PresenceService } from './presence-service';
 import { HubConnection, HubConnectionState } from '@microsoft/signalr';
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,7 +17,7 @@ export class AccountService {
   currentUser = signal<User | null>(null);
   private refreshInterval: ReturnType<typeof setInterval> | null = null;
 
- baseUrl = "https://localhost:5001/api/"
+ baseUrl = environment.baseUrl
 
   register(creds : RegisterCreds){
     return this.http.post<User>(this.baseUrl+"account/register",creds , {withCredentials:true}).pipe(
