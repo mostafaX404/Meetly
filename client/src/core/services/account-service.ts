@@ -14,6 +14,8 @@ export class AccountService {
   private likeService = inject(LikesService)
   private presenceService = inject(PresenceService)
   currentUser = signal<User | null>(null);
+  private refreshInterval: ReturnType<typeof setInterval> | null = null;
+
  baseUrl = "https://localhost:5001/api/"
 
   register(creds : RegisterCreds){
@@ -49,7 +51,7 @@ setCurrentUser(user:User){
 
 
 startTokenRefreshInterval() {
-    setInterval(() => {
+ this.refreshInterval =   setInterval(() => {
         this.http.post<User>(this.baseUrl + 'account/refresh-token', {}, 
             {withCredentials: true}).subscribe({
                 next: user => {
@@ -63,10 +65,19 @@ startTokenRefreshInterval() {
 }
 
 logout() {
-  localStorage.removeItem("filters")
-  this.likeService.clearLikeIds()
-  this.currentUser.set(null);
-  this.presenceService.stopHubConnection()
+
+   if (this.refreshInterval) {
+        clearInterval(this.refreshInterval);
+        this.refreshInterval = null;
+    }
+  this.http.post(this.baseUrl + 'account/logout', {}, { withCredentials: true }).subscribe({
+    next: () => {
+      localStorage.removeItem('filters');
+      this.likeService.clearLikeIds();
+      this.currentUser.set(null);
+      this.presenceService.stopHubConnection();
+    }
+  })
 }
 
 refreshToken() {

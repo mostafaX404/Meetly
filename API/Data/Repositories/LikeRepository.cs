@@ -58,8 +58,5 @@ public class LikeRepository(AppDbContext _context) : ILikeRepository
         likesParams.PageNumber, likesParams.PageSize);
 }
 
-    public async Task<bool> SaveChangesAsync()
-    {
-        return await _context.SaveChangesAsync() > 0 ;
-    }
+
 }

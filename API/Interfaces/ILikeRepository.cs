@@ -5,7 +5,6 @@ public interface ILikeRepository
 
     void DeleteLike(MemberLikes like);
 
-    Task<bool> SaveChangesAsync();
 
     Task<IReadOnlyList<string>> GetCurrentMemberLikesIds(string memberId);
 

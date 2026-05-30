@@ -7,10 +7,11 @@ import { Home } from "../features/home/home";
 import { User } from '../types/User';
 import { Router, RouterOutlet } from '@angular/router';
 import { NgClass } from "@angular/common";
+import { ConfirmDialogComponent } from "../shared/confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-root',
-  imports: [Nav, RouterOutlet],
+  imports: [Nav, RouterOutlet, ConfirmDialogComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

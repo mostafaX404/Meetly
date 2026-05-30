@@ -23,21 +23,12 @@ private likeService = inject(LikesService);
 
     protected isOnline = computed(() => 
     this.presenceService.onlineUsers()
-        .includes(this.member().id.toString())); // add .toString()
+        .includes(this.member().id.toString())); 
 
  toggleLike(event: Event) {
     event.stopPropagation();
     const memberId = this.member().id;
-
-    this.likeService.toggleLike(memberId).subscribe({
-      next: () => {
-        this.likeService.likeIds.update(ids => 
-          ids.includes(memberId) 
-            ? ids.filter(id => id !== memberId) 
-            : [...ids, memberId] 
-        );
-      }
-    });
+    this.likeService.toggleLike(memberId);
   }
 
 }

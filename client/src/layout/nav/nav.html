@@ -17,12 +17,12 @@
             <a routerLink="/lists" routerLinkActive="text-accent">Lists</a>
             <a routerLink="/messages" routerLinkActive="text-accent">Messages</a>
             <a *appHasRole="['Admin','Moderator']" routerLink="/admin" routerLinkActive="text-accent">Admin</a>
-        }
-        <a routerLink="/errors" routerLinkActive="text-accent">Errors</a>
+            }
+            <a routerLink="/errors" routerLinkActive="text-accent">Errors</a>
         </nav>
 
         @if (busyService.busyCounter()> 0 ) {
-            <span class="loading loading-spinner text-accent"></span>
+        <span class="loading loading-spinner text-accent"></span>
         }
 
 
@@ -55,8 +55,8 @@
                     <span>{{user.displayName}}</span>
                 </div>
 
-                <ul tabindex="-1" class="dropdown-content  menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                    <li><a  routerLink="/members/{{user.id}}">Edit Profile</a></li>
+                <ul (click)="handleSelectUserItem()" tabindex="-1" class="dropdown-content  menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                    <li><a routerLink="/members/{{user.id}}">Edit Profile</a></li>
                     <li><a (click)="logout()">logout</a></li>
                 </ul>
             </div>
@@ -65,7 +65,12 @@
                 <input [(ngModel)]="creds.Email" name="email" type="text" class="input" placeholder="Email">
                 <input [(ngModel)]="creds.password" name="password" type="password" class="input"
                     placeholder="Password">
-                <button class="btn">Login</button>
+                <button type="submit" class="btn btn-primary">
+                    @if (loading()) {
+                    <span class="mr-2 loading loading-spinner"></span>
+                    }
+                    Login
+                </button>
             </form>
 
             }

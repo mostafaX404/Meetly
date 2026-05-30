@@ -33,11 +33,15 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<ITokenService , TokenService>();
-builder.Services.AddScoped<IMemberRepository, MemberReopsitory>();
 builder.Services.AddScoped<IPhotoService,PhotoService>();
 builder.Services.AddScoped<UserLastActiveLogger>();
-builder.Services.AddScoped<ILikeRepository,LikeRepository>();
-builder.Services.AddScoped<IMessageRepository,MessageRepository>();
+
+// builder.Services.AddScoped<IMemberRepository, MemberReopsitory>();
+// builder.Services.AddScoped<ILikeRepository,LikeRepository>();
+// builder.Services.AddScoped<IMessageRepository,MessageRepository>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 builder.Services.Configure<CloudinarySettings>(
 builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddSingleton<PresenceTracker>();

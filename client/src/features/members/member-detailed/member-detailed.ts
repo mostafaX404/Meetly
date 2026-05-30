@@ -8,6 +8,7 @@ import { filter } from 'rxjs';
 import { AgePipe } from '../../../core/pipes/age-pipe';
 import { AccountService } from '../../../core/services/account-service';
 import { PresenceService } from '../../../core/services/presence-service';
+import { LikesService } from '../../../core/services/likes-service';
 
 @Component({
   selector: 'app-member-detailed',
@@ -20,12 +21,24 @@ protected memberService = inject(MemberService);
 private route = inject(ActivatedRoute);
 private router = inject(Router);
 private accountService = inject(AccountService)
+protected likeService = inject(LikesService)
 protected title  =signal<string|undefined>('Profile');
 protected presenceService = inject(PresenceService)
-protected isCurrentUser = computed(()=>{
-  return this.accountService.currentUser()?.id == this.route.snapshot.paramMap?.get('id');
-})
+private routeId = signal<string | null>(null);
+    protected hasLiked = computed(() => 
+        this.likeService.likeIds().includes(this.routeId()!));
 
+
+
+protected isCurrentUser = computed(() => {
+  return this.accountService.currentUser()?.id === this.routeId()
+});
+
+constructor() {
+  this.route.paramMap.subscribe(params => {
+    this.routeId.set(params.get('id'));
+  })
+}
 ngOnInit(): void {
 
   // router resolver : a method to transfer data between router based parent child 

@@ -26,6 +26,7 @@ export class Nav implements OnInit{
   protected selectedTheme = signal<string>(localStorage.getItem("theme")||"light")
   protected themes = themes
   protected busyService = inject(BusyService)
+  protected loading = signal(false);
 
 handleSelectTheme(theme: string) {
   this.selectedTheme.set(theme);
@@ -36,6 +37,7 @@ if (elem) elem.blur()
 }
 
   login(){
+    this.loading.set(true)
     this.accounService.login(this.creds).subscribe({
       next: result => {
         this.router.navigateByUrl('/members')
@@ -44,10 +46,18 @@ if (elem) elem.blur()
       },
       error: err=> {
         this.toast.error(err.error)
+      },
+      complete : ()=>{
+        this.loading.set(false);
       }
     })
 
   }
+
+handleSelectUserItem() {
+    const elem = document.activeElement as HTMLDivElement;
+    if (elem) elem.blur();
+}
 
   logout(){
     this.router.navigateByUrl('/')
