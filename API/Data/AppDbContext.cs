@@ -47,7 +47,7 @@ public class AppDbContext(DbContextOptions options) : IdentityDbContext<AppUser>
         .HasForeignKey(x => x.SourceMemberId).OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<MemberLikes>().HasOne(x => x.TargetMember).WithMany(x => x.LikedByMembers)
-        .HasForeignKey(x => x.TargetMemberId).OnDelete(DeleteBehavior.Cascade);
+        .HasForeignKey(x => x.TargetMemberId).OnDelete(DeleteBehavior.NoAction);
 
         var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
              v => v.ToUniversalTime(),

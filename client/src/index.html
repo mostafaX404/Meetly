@@ -1,25 +1,36 @@
 <!doctype html>
-<html lang="en" class="bg-base-300">
+<html lang="en" class="bg-base-200">
 
 <head>
-  <meta charset="utf-8">  
-  <title>Client</title>
+  <meta charset="utf-8">
+  <title>Meetly — Find Your Match</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <div id="initial-splash" class="hero-content h-screen min-w-screen">
-        <div class="flex flex-col items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="size-42 text-primary">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-            </svg>
-            <h1 class="text-5xl font-bold">Initializing........</h1>
-        </div>
+  <div id="initial-splash" class="hero hero-mesh h-screen min-w-screen flex items-center justify-center">
+    <div class="flex flex-col items-center">
+      <div class="flex items-center logo-heartbeat mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+          class="size-20 text-primary -rotate-12">
+          <path
+            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+          class="size-20 text-secondary -ml-8 rotate-6">
+          <path
+            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+      </div>
+      <h1 class="font-display text-4xl font-bold text-base-content">Meetly</h1>
+      <p class="text-base-content/50 mt-2 animate-pulse">Loading your experience...</p>
     </div>
+  </div>
   <app-root></app-root>
 </body>
 

@@ -1,33 +1,43 @@
 @if (member(); as member) {
 <div routerLink="/members/{{member.id}}"
-    class="card cursor-pointer transition-all duration-300 ease-in-out
-        transform hover:-translate-y-2 relative">
-    <img src="{{member?.imageUrl || '/user.png'}}" alt="{{member.displayName}} image" class="rounded-lg">
+    class="card card-hover cursor-pointer relative overflow-hidden rounded-2xl shadow-md bg-base-100">
 
+    <figure class="overflow-hidden aspect-[3/4]">
+        <img src="{{member?.imageUrl || '/user.png'}}" alt="{{member.displayName}} image"
+            class="card-img w-full h-full object-cover rounded-2xl">
+    </figure>
 
-@if (isOnline()) {
-  <span class="status status-success status-xl absolute top-3 left-3"></span>
-}
+    @if (isOnline()) {
+    <span class="status status-success status-lg absolute top-3 left-3 ring-2 ring-base-100"></span>
+    }
 
-
-    <button (click)="toggleLike($event)" class="absolute top-1 right-1 z-40 btn btn-ghost btn-circle">
+    <button (click)="toggleLike($event)"
+        class="like-btn absolute top-2 right-2 z-40 btn btn-circle btn-ghost border-0"
+        [class.liked]="hasLiked()">
         <svg xmlns="http://www.w3.org/2000/svg"
-         [attr.fill]=" hasLiked()?'red' : 'none '" 
-         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-</svg>
-
-
-
+            [attr.fill]="hasLiked() ? 'currentColor' : 'none'"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            class="size-6 transition-colors"
+            [class.text-error]="hasLiked()"
+            [class.text-white]="!hasLiked()">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+        </svg>
     </button>
+
     <div
-        class="card-actions z-40
-            absolute bottom-0 w-full px-3 py-1 rounded-b-lg
-            bg-gradient-to-t from-black via-black/75 to-black/0
-        ">
+        class="card-actions z-40 absolute bottom-0 w-full px-4 py-3 rounded-b-2xl
+            bg-gradient-to-t from-black/90 via-black/50 to-transparent">
         <div class="flex flex-col text-white">
-            <span class="font-semibold">{{member.displayName}}, {{member.dateOfBirth | age}}</span>
-            <span class="text-sm">{{member.city}}</span>
+            <span class="font-semibold text-base">{{member.displayName}}@if (member.dateOfBirth | age; as age) {, {{age}}}</span>
+            <span class="text-sm text-white/75 flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-3.5">
+                    <path fill-rule="evenodd"
+                        d="m9.69 18.933.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 0 0 .281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 1 0 3 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 0 0 2.273 1.765 11.842 11.842 0 0 0 .976.544l.062.029.018.008.006.003ZM10 11.25a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5Z"
+                        clip-rule="evenodd" />
+                </svg>
+                {{member.city}}
+            </span>
         </div>
     </div>
 </div>

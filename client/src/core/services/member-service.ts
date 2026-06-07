@@ -61,7 +61,21 @@ getMembers(memberParams: MemberParams) {
   }
 
   setMainPhoto(photo: Photo) {
-    return this.http.put(this.baseUrl + `members/set-main-image/${photo.id}`, {});
+    return this.http.put(this.baseUrl + `members/set-main-image/${photo.id}`, {}).pipe(
+      tap(() => this.updateMemberImageUrl(photo.url))
+    );
+  }
+
+  updateMemberImageUrl(imageUrl: string) {
+    const member = this.member();
+    if (member) {
+      this.member.set({ ...member, imageUrl });
+    }
+
+    const user = this.accountService.currentUser();
+    if (user && user.id === member?.id) {
+      this.accountService.setCurrentUser({ ...user, imageUrl });
+    }
   }
 
 

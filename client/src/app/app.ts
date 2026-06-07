@@ -11,7 +11,7 @@ import { ConfirmDialogComponent } from "../shared/confirm-dialog/confirm-dialog.
 
 @Component({
   selector: 'app-root',
-  imports: [Nav, RouterOutlet, ConfirmDialogComponent],
+  imports: [Nav, RouterOutlet, ConfirmDialogComponent, NgClass],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

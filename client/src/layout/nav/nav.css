@@ -1,0 +1,41 @@
+.nav-header {
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklch, var(--color-primary) 92%, black),
+    color-mix(in oklch, var(--color-primary) 70%, black) 50%,
+    color-mix(in oklch, var(--color-secondary) 40%, black)
+  );
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid color-mix(in oklch, white 12%, transparent);
+  box-shadow: 0 4px 30px color-mix(in oklch, var(--color-primary) 20%, transparent);
+}
+
+.nav-logo:hover .logo-heartbeat {
+  animation-duration: 0.8s;
+}
+
+.nav-avatar {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 2px solid color-mix(in oklch, white 40%, transparent);
+}
+
+.nav-avatar:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-accent) 50%, transparent);
+}
+
+.nav-login .input {
+  background: color-mix(in oklch, white 12%, transparent);
+  border-color: color-mix(in oklch, white 25%, transparent);
+  color: white;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-login .input::placeholder {
+  color: color-mix(in oklch, white 55%, transparent);
+}
+
+.nav-login .input:focus {
+  background: color-mix(in oklch, white 18%, transparent);
+  border-color: color-mix(in oklch, white 50%, transparent);
+}

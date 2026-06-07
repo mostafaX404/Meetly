@@ -1,11 +1,6 @@
 <app-nav></app-nav>
 
-
-<div 
-    [class.mt-24]="router.url !== '/'" 
-    [class.container]="router.url !== '/'"
-    [class.mx-auto]="router.url !== '/'">
-    
+<div [ngClass]="router.url !== '/' ? 'mt-20 px-4 lg:px-8 py-6 max-w-[1600px] mx-auto page-enter' : ''">
     <router-outlet></router-outlet>
 </div>
 

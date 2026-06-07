@@ -1,10 +1,9 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MemberService } from '../../../core/services/member-service';
 import { ActivatedRoute } from '@angular/router';
-import { Member, Photo } from '../../../types/member';
+import { Photo } from '../../../types/member';
 import { ImageUpload } from '../../../shared/image-upload/image-upload';
 import { AccountService } from '../../../core/services/account-service';
-import { User } from '../../../types/User';
 import { StarButton } from "../../../shared/star-button/star-button";
 import { DeleteButton } from "../../../shared/delete-button/delete-button";
 
@@ -29,7 +28,7 @@ export class MemberPhotos implements OnInit {
     const id = this.router.parent?.snapshot.paramMap.get('id');
     if (id) {
       this.memberService.getMemberPhotos(id).subscribe({
-        next: p => this.photos.set(p)
+        next: p => this.photos.set(p.filter(photo => !!photo.url))
       });
     }
   }
@@ -44,23 +43,7 @@ export class MemberPhotos implements OnInit {
   this.photos.update(photos => [...photos, photo]);
 
   if (this.accountService.currentUser()?.imageUrl == null) {
-
-    const user = this.accountService.currentUser();
-    if (user) {
-      this.accountService.setCurrentUser({
-        ...user,
-        imageUrl: photo.url
-      });
-    }
-
-    this.memberService.member.update(member => {
-      if (!member) return member;
-
-      return {
-        ...member,
-        imageUrl: photo.url
-      };
-    });
+    this.memberService.updateMemberImageUrl(photo.url);
   }
 }
         
@@ -73,17 +56,7 @@ export class MemberPhotos implements OnInit {
   }
 
   setMainPhoto(photo: Photo) {
-    this.memberService.setMainPhoto(photo).subscribe({
-      next: () => {
-        const currentUser = this.accountService.currentUser();
-        if (currentUser) currentUser.imageUrl = photo.url;
-        this.accountService.setCurrentUser(currentUser as User);
-        this.memberService.member.update(member => ({
-          ...member,
-          imageUrl: photo.url
-        }) as Member)
-      }
-    })
+    this.memberService.setMainPhoto(photo).subscribe();
   }
 
 

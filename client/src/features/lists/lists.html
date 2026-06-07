@@ -1,46 +1,41 @@
 @if (paginatedResult(); as paginatedResult) {
-  <div class="flex flex-col w-full">
-    <div class="flex justify-between items-center">
+<div class="flex flex-col w-full page-enter">
+  <div class="flex flex-wrap justify-between items-center gap-4">
 
-      <div class="flex tabs tabs-box tabs-lg text-primary w-fit">
-        @for (tab of tabs; track $index) {
-          <button
-            role="tab"
-            class="tab"
-            [class.tab-active]="predicate === tab.value"
-            (click)="setPredicate(tab.value)"
-          >
-            {{ tab.label }}
-          </button>
-        }
-      </div>
-
-      @if (paginatedResult.metaData; as metadata) {
-        <app-paginator
-          [hidden]="metadata.totalCount === 0"
-          [pageNumber]="metadata.currentPage"
-          [pageSize]="metadata.pageSize"
-          [totalCount]="metadata.totalCount"
-          [totalPages]="metadata.totalPages"
-          (pageChange)="onPageChange($event)"
-        />
+    <div class="tabs tabs-boxed bg-base-200/80 p-1 rounded-xl">
+      @for (tab of tabs; track $index) {
+      <button role="tab" class="tab rounded-lg transition-all duration-200"
+        [class.tab-active]="predicate === tab.value" [class.bg-primary]="predicate === tab.value"
+        [class.text-primary-content]="predicate === tab.value" (click)="setPredicate(tab.value)">
+        {{ tab.label }}
+      </button>
       }
-
     </div>
 
-    @if (paginatedResult.items; as members) {
-      @if (members.length > 0) {
-        <div class="grid grid-cols-5 gap-6 mt-3">
-          @for (member of members; track member.id) {
-            <app-member-card [member]="member" />
-          }
-        </div>
-      } @else {
-        <div class="mt-3 text-lg">
-          There are no results for this filter
-        </div>
-      }
+    @if (paginatedResult.metaData; as metadata) {
+    <app-paginator [hidden]="metadata.totalCount === 0" [pageNumber]="metadata.currentPage"
+      [pageSize]="metadata.pageSize" [totalCount]="metadata.totalCount" [totalPages]="metadata.totalPages"
+      (pageChange)="onPageChange($event)" />
     }
-
   </div>
+
+  @if (paginatedResult.items; as members) {
+  @if (members.length > 0) {
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mt-6">
+    @for (member of members; track member.id) {
+    <app-member-card [member]="member" />
+    }
+  </div>
+  } @else {
+  <div class="flex flex-col items-center justify-center mt-16 gap-4 text-base-content/60">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-16 text-primary/30">
+      <path
+        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+    </svg>
+    <p class="text-lg font-medium">No results for this filter yet</p>
+    <p class="text-sm">Keep exploring — your match might be just around the corner.</p>
+  </div>
+  }
+  }
+</div>
 }

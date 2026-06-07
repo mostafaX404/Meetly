@@ -1,14 +1,18 @@
 @if (this.memberService.member(); as member) {
-<div class="flex flex-col gap-3">
-  <div class="flex gap-3">
-    <span class="font-semibold">Member since:</span>
-    <span>{{member.created | date: 'longDate'}}</span>
+<div class="flex flex-col gap-5">
+  <div class="grid grid-cols-2 gap-4">
+    <div class="flex flex-col gap-1 p-4 bg-base-200/50 rounded-xl">
+      <span class="text-xs uppercase tracking-wider text-base-content/50 font-medium">Member since</span>
+      <span class="font-medium">{{member.created | date: 'longDate'}}</span>
+    </div>
+    <div class="flex flex-col gap-1 p-4 bg-base-200/50 rounded-xl">
+      <span class="text-xs uppercase tracking-wider text-base-content/50 font-medium">Last active</span>
+      <span class="font-medium">{{member.lastActive | timeAgo}}</span>
+    </div>
   </div>
-  <div class="flex gap-3">
-    <span class="font-semibold">Last active:</span>
-    <span>{{member.lastActive | timeAgo}}</span>
-  </div>
-  <h3 class="text-lg font-semibold text-primary">About {{member.displayName}}</h3>
+
+  <h3 class="font-display text-xl text-primary">About {{member.displayName}}</h3>
+
   @if(memberService.editMode()){
   <form #editForm="ngForm" (ngSubmit)="updateProfile()" class="flex flex-col w-full gap-4">
     <label class="floating-label">
@@ -20,7 +24,7 @@
     <label class="floating-label">
       <span>Description</span>
       <textarea class="textarea w-full" name="description" [(ngModel)]="editableMember.description"
-        placeholder="Description"></textarea>
+        placeholder="Tell others about yourself..."></textarea>
     </label>
 
     <label class="floating-label">
@@ -30,15 +34,17 @@
 
     <label class="floating-label">
       <span>Country</span>
-      <input class="input w-full" name="country" [(ngModel)]="editableMember.country" placeholder="Display name">
+      <input class="input w-full" name="country" [(ngModel)]="editableMember.country" placeholder="Country">
     </label>
 
     <div class="flex self-end">
-      <button type="submit" class="btn btn-success">Submit</button>
+      <button type="submit" class="btn btn-primary btn-glow">Save Changes</button>
     </div>
   </form>
-  }@else {
-  <div>{{member.description ||"no description provided yet"}}</div>
+  } @else {
+  <p class="text-base-content/80 leading-relaxed">
+    {{member.description || "No description provided yet. Tell the world about yourself!"}}
+  </p>
   }
 </div>
 }

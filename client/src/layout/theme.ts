@@ -1,5 +1,6 @@
 export const themes = [
-    "light",
+    "meetly",
+    "valentine",
     "dark",
     "cupcake",
     "bumblebee",

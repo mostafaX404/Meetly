@@ -1,10 +1,10 @@
 <dialog #dialogRef class="modal">
-  <div class="modal-box">
-    <h3 class="font-bold text-lg">{{message}}</h3>
-    <p class="py-2">This action cannot be undone</p>
+  <div class="modal-box glass-panel rounded-2xl shadow-2xl">
+    <h3 class="font-display font-bold text-lg">{{message}}</h3>
+    <p class="py-2 text-base-content/60">This action cannot be undone.</p>
     <div class="modal-action">
-      <button class="btn btn-outline" (click)="cancel()">Cancel</button>
-      <button class="btn btn-primary" (click)="confirm()">Confirm</button>
+      <button class="btn btn-ghost" (click)="cancel()">Cancel</button>
+      <button class="btn btn-error btn-glow" (click)="confirm()">Confirm</button>
     </div>
   </div>
 </dialog>

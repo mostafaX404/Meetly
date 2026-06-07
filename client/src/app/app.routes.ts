@@ -13,6 +13,7 @@ import { MemberPhotos } from '../features/members/member-photos/member-photos';
 import { MemberMessages } from '../features/members/member-messages/member-messages';
 import { memberResolver } from '../features/members/member-resolver';
 import { preventUnsavedChangesGuard } from '../core/guards/prevent-unsaved-changes-guard';
+import { preventSelfMessageGuard } from '../core/guards/prevent-self-message-guard';
 import { AdminComponent } from '../features/admin/admin.component';
 import { adminGuard } from '../core/guards/admin-guard';
 
@@ -31,7 +32,7 @@ export const routes: Routes = [
         {path:'',redirectTo:'profile',pathMatch:'full'},
         {path:'profile',component:MemberProfile,title:"Profile",canDeactivate:[preventUnsavedChangesGuard]},
         {path:'photos',component:MemberPhotos,title:"Photos"},
-        {path:'messages',component:MemberMessages,title:"Messages"}
+        {path:'messages',component:MemberMessages,title:"Messages",canActivate:[preventSelfMessageGuard]}
     ]},
     { path: 'lists', component: Lists },
     { path: 'messages', component: Messages },

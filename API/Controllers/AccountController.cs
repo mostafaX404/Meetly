@@ -29,7 +29,8 @@ public class AccountController(UserManager<AppUser> userManager, ITokenService t
                 DisplayName = registerDto.DisplayName,
                 Gender = registerDto.Gender,
                 City = registerDto.City,
-                Country = registerDto.Country
+                Country = registerDto.Country,
+                DateOfBirth = registerDto.DateOfBirth
             }
         };
 

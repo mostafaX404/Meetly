@@ -1,81 +1,90 @@
-<header class="p-3 w-full fixed top-0 z-50 bg-gradient-to-r from-primary to-black">
-    <div class="flex align-middle items-center px-10 mx-auto gap-6">
+<header class="nav-header p-3 w-full fixed top-0 z-50">
+    <div class="flex align-middle items-center px-6 lg:px-10 mx-auto gap-6 max-w-[1600px]">
         <div class="text-white">
             <a routerLink="/" [routerLinkActiveOptions]="{exact:true}" routerLinkActive="text-accent"
-                class="flex items-center max-h-16  border-r-white border-r-2 pr-6">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-7">
-                    <path
-                        d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z" />
-                </svg>
-                <h3 class="text-2xl p-2 uppercase font-semibold">Meetly</h3>
+                class="nav-logo flex items-center gap-2 border-r border-white/25 pr-6 transition-opacity hover:opacity-90">
+                <div class="relative flex items-center logo-heartbeat">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                        class="size-7 text-rose-300 -rotate-12">
+                        <path
+                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                        class="size-7 text-primary -ml-3 rotate-6">
+                        <path
+                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-display font-semibold tracking-wide">Meetly</h3>
             </a>
-
         </div>
-        <nav class="flex gap-3 my-2 uppercase text-lg text-white">
+
+        <nav class="hidden md:flex gap-5 my-2 text-sm font-medium tracking-wider text-white">
             @if(accounService.currentUser()){
-            <a routerLink="/members" routerLinkActive="text-accent" [routerLinkActiveOptions]="{exact:true}">Matches</a>
-            <a routerLink="/lists" routerLinkActive="text-accent">Lists</a>
-            <a routerLink="/messages" routerLinkActive="text-accent">Messages</a>
-            <a *appHasRole="['Admin','Moderator']" routerLink="/admin" routerLinkActive="text-accent">Admin</a>
+            <a routerLink="/members" routerLinkActive="text-accent" [routerLinkActiveOptions]="{exact:true}"
+                class="nav-link uppercase">Matches</a>
+            <a routerLink="/lists" routerLinkActive="text-accent" class="nav-link uppercase">Lists</a>
+            <a routerLink="/messages" routerLinkActive="text-accent" class="nav-link uppercase">Messages</a>
+            <a *appHasRole="['Admin','Moderator']" routerLink="/admin" routerLinkActive="text-accent"
+                class="nav-link uppercase">Admin</a>
             }
-            <a routerLink="/errors" routerLinkActive="text-accent">Errors</a>
+            <a routerLink="/errors" routerLinkActive="text-accent" class="nav-link uppercase">Errors</a>
         </nav>
 
         @if (busyService.busyCounter()> 0 ) {
         <span class="loading loading-spinner text-accent"></span>
         }
 
-
         <div class="flex align-middle ml-auto gap-3">
 
-            <div class="dropdown mr-5 dropdown-end">
+            <div class="dropdown dropdown-end">
                 <button tabindex="1"
-                    class="flex flex-col justify-center align-middle text-white cursor-pointer uppercase text-xs">
+                    class="btn btn-ghost btn-circle text-white/80 hover:text-white hover:bg-white/10 transition-all">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6 flex self-center">
+                        stroke="currentColor" class="size-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
                     </svg>
-
                 </button>
-                <ul tabindex="1" class="dropdown-content menu bg-base-100 rounded-box z-50 w-52 p-2 shadow-sm">
+                <ul tabindex="1"
+                    class="dropdown-content menu glass-panel rounded-2xl z-50 w-52 p-2 shadow-xl">
                     @for (theme of themes; track $index) {
                     <li (click)="handleSelectTheme(theme)">
-                        <a>{{theme}}</a>
+                        <a class="rounded-lg capitalize transition-colors">{{theme}}</a>
                     </li>
                     }
                 </ul>
             </div>
 
-
             @if (accounService.currentUser() ; as user) {
             <div class="dropdown dropdown-end">
-                <div tabindex="0" role="button" class="flex items-center text-white text-xl gap-3 cursor-pointer">
-                    <img [src]=" user.imageUrl || '/user.png'" alt="User Avatar" class="w-10 h-10 rounded-full">
-                    <span>{{user.displayName}}</span>
+                <div tabindex="0" role="button"
+                    class="flex items-center text-white gap-3 cursor-pointer rounded-full pr-2 hover:bg-white/10 transition-all py-1">
+                    <img [src]="user.imageUrl || '/user.png'" alt="User Avatar"
+                        class="nav-avatar w-10 h-10 rounded-full object-cover">
+                    <span class="hidden sm:inline font-medium">{{user.displayName}}</span>
                 </div>
 
-                <ul (click)="handleSelectUserItem()" tabindex="-1" class="dropdown-content  menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                    <li><a routerLink="/members/{{user.id}}">Edit Profile</a></li>
-                    <li><a (click)="logout()">logout</a></li>
+                <ul (click)="handleSelectUserItem()" tabindex="-1"
+                    class="dropdown-content menu glass-panel rounded-2xl z-50 w-52 p-2 shadow-xl">
+                    <li><a routerLink="/members/{{user.id}}" class="rounded-lg">Edit Profile</a></li>
+                    <li><a (click)="logout()" class="rounded-lg text-error">Logout</a></li>
                 </ul>
             </div>
             } @else {
-            <form #loginForm="ngForm" (ngSubmit)="login()" class="flex items-center gap-3">
-                <input [(ngModel)]="creds.Email" name="email" type="text" class="input" placeholder="Email">
-                <input [(ngModel)]="creds.password" name="password" type="password" class="input"
-                    placeholder="Password">
-                <button type="submit" class="btn btn-primary">
+            <form #loginForm="ngForm" (ngSubmit)="login()" class="nav-login flex items-center gap-2">
+                <input [(ngModel)]="creds.Email" name="email" type="text" class="input input-sm w-32 lg:w-40"
+                    placeholder="Email">
+                <input [(ngModel)]="creds.password" name="password" type="password"
+                    class="input input-sm w-32 lg:w-40" placeholder="Password">
+                <button type="submit" class="btn btn-sm btn-glow bg-white/15 border-white/25 text-white hover:bg-white/25">
                     @if (loading()) {
-                    <span class="mr-2 loading loading-spinner"></span>
+                    <span class="loading loading-spinner loading-xs"></span>
                     }
                     Login
                 </button>
             </form>
-
             }
-
-
         </div>
     </div>
 </header>

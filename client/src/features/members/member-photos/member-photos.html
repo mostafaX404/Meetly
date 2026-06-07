@@ -1,26 +1,28 @@
 @if (!memberService.editMode()) {
 @if (photos(); as photos) {
 @if (photos.length > 0) {
-<div class="grid grid-cols-4 auto-rows-min gap-3 p-5 h-[65vh] overflow-auto">
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 auto-rows-min gap-4 h-[65vh] overflow-auto p-1">
   @for (photo of photos; track photo.id) {
-  <div class="relative">
-    <img src="{{photo.url}}" alt="photo of member" class="w-full rounded-lg">
+  <div class="relative group rounded-xl overflow-hidden shadow-sm card-hover">
+    <img src="{{photo.url}}" alt="photo of member" class="w-full aspect-square object-cover">
     @if (accountService.currentUser()?.id == memberService.member()?.id) {
-    
-      <app-star-button [disabled]="photo.url === memberService.member()?.imageUrl"
+    <app-star-button [disabled]="photo.url === memberService.member()?.imageUrl"
       [selected]="photo.url === memberService.member()?.imageUrl" (clickEvent)="setMainPhoto(photo)" />
-  
-  <app-delete-button
-    [disabled]="photo.url === memberService.member()?.imageUrl"
-    (clickEvent)="deletePhoto(photo.id)"
-    class="absolute top-1 left-1"
-/>
+    <app-delete-button [disabled]="photo.url === memberService.member()?.imageUrl"
+      (clickEvent)="deletePhoto(photo.id)" class="absolute top-1 left-1" />
     }
-    </div>  
-}
+  </div>
+  }
 </div>
 } @else {
-<p class="text-center text-gray-500">No photos available</p>
+<div class="flex flex-col items-center justify-center h-[65vh] gap-3 text-base-content/50">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+    class="size-12 text-primary/30">
+    <path stroke-linecap="round" stroke-linejoin="round"
+      d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0 0 22.5 18.75V5.25A2.25 2.25 0 0 0 20.25 3H3.75A2.25 2.25 0 0 0 1.5 5.25v13.5A2.25 2.25 0 0 0 3.75 21Z" />
+  </svg>
+  <p>No photos yet — add some to stand out!</p>
+</div>
 }
 }
 } @else {

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SQLitePCL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +17,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("Default"));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 
@@ -103,15 +102,22 @@ builder.Services.AddAuthorizationBuilder()
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 
-app.UseCors(x=>x.WithOrigins("https://localhost:4200","http://localhost:4200").AllowAnyHeader().AllowAnyHeader().AllowCredentials());
+app.UseCors(x => x.WithOrigins("https://localhost:4200", "http://localhost:4200")
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials());
 
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.MapControllers();
 app.MapHub<PresenceHub>("hubs/presence");
 app.MapHub<MessageHub>("hubs/messages");
+app.MapFallbackToController("Index","Fallback");
+
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 try

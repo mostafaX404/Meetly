@@ -1,27 +1,47 @@
-<div class="hero bg-base-200 min-h-screen">
-    @if (!this.registerMode()) {
-    <div class="hero-content text-center">
-        <div class="flex flex-col items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="size-42 text-primary">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-            </svg>
-            <h1 class="text-5xl font-bold">Find your match</h1>
-            <p class="py-6">Come on in... all you need to do is sign up</p>
-            <div class="flex items-center gap-3">
-                <button (click)="showRegister(true)" class="btn btn-primary btn-lg">Register</button>
-                <button class="btn btn-info btn-lg">Learn more</button>
-            </div>
+<div class="hero hero-mesh min-h-screen relative overflow-hidden">
+    <!-- Decorative floating hearts -->
+    <svg class="floating-heart absolute top-20 left-[10%] size-16 text-primary" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>
+    <svg class="floating-heart absolute top-40 right-[15%] size-12 text-secondary" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>
+    <svg class="floating-heart absolute bottom-32 left-[20%] size-10 text-accent" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>
 
+    @if (!this.registerMode()) {
+    <div class="hero-content text-center z-10 page-enter">
+        <div class="flex flex-col items-center max-w-2xl">
+            <div class="relative flex items-center mb-6 logo-heartbeat">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="size-20 text-primary -rotate-12 drop-shadow-lg">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                    class="size-20 text-secondary -ml-8 rotate-6 drop-shadow-lg">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </div>
+            <h1 class="font-display text-5xl md:text-6xl font-bold text-base-content leading-tight">
+                Find your <span class="text-primary">perfect match</span>
+            </h1>
+            <p class="py-6 text-lg text-base-content/70 max-w-md">
+                Real connections start here. Join thousands of people looking for something meaningful.
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <button (click)="showRegister(true)" class="btn btn-primary btn-lg btn-glow px-8 shadow-lg">
+                    Get Started
+                </button>
+                <button class="btn btn-outline btn-lg border-primary/30 hover:border-primary hover:bg-primary/5">
+                    Learn More
+                </button>
+            </div>
         </div>
     </div>
-    }@else {
-    <div class="w-full text-2xl text-center flex justify-center">
-        <app-register
-         (cancelRegister)="showRegister($event)"
-         ></app-register>
+    } @else {
+    <div class="w-full flex justify-center z-10 page-enter py-8">
+        <app-register (cancelRegister)="showRegister($event)"></app-register>
     </div>
     }
-
 </div>

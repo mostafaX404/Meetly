@@ -34,6 +34,10 @@ protected isCurrentUser = computed(() => {
   return this.accountService.currentUser()?.id === this.routeId()
 });
 
+protected memberImageUrl = computed(() =>
+  this.memberService.member()?.imageUrl || '/user.png'
+);
+
 constructor() {
   this.route.paramMap.subscribe(params => {
     this.routeId.set(params.get('id'));

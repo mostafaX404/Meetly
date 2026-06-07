@@ -1,10 +1,17 @@
 @if (paginatedMembers(); as paginatedResult) {
-<div class="flex flex-col w-full">
-  <div class="flex justify-between items-center">
-    <div class="flex gap-3">
-      <button (click)="openModal()" class="btn btn-primary">Select Filters</button>
-      <button (click)="resetFilters()" class="btn btn-neutral">Reset Filters</button>
-      <div class="text-lg bg-base-100 py-2 px-4 border-1 rounded-lg text-primary capitalize">
+<div class="flex flex-col w-full page-enter">
+  <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+    <div class="flex flex-wrap gap-3 items-center">
+      <button (click)="openModal()" class="btn btn-primary btn-glow gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-4">
+          <path fill-rule="evenodd"
+            d="M2.628 1.601C5.028 1.601 7.06 3.07 8 5.051 8.94 3.07 10.972 1.601 13.372 1.601 16.856 1.601 19.628 4.373 19.628 7.857c0 2.528-1.087 4.851-2.824 6.494l-6.077 6.077a1.5 1.5 0 0 1-2.122 0l-6.077-6.077C1.715 12.708.628 10.385.628 7.857.628 4.373 3.4 1.601 6.884 1.601H8c.972 0 1.872.35 2.628.951V1.601Z"
+            clip-rule="evenodd" />
+        </svg>
+        Filters
+      </button>
+      <button (click)="resetFilters()" class="btn btn-ghost border border-base-300">Reset</button>
+      <div class="badge badge-lg badge-primary badge-outline capitalize font-medium px-4 py-3">
         {{displayMessage}}
       </div>
     </div>
@@ -16,7 +23,7 @@
   </div>
 
   @if (paginatedResult.items; as members) {
-  <div class="grid grid-cols-5 gap-6">
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
     @for (member of members; track member.id) {
     <app-member-card [member]="member" />
     }

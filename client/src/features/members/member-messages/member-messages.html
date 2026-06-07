@@ -1,34 +1,52 @@
-<div class="flex flex-col w-full h-[65vh]">
-    <div class="flex flex-col flex-grow overflow-auto">
+<div class="flex flex-col w-full h-full min-h-[50vh] max-h-[65vh]">
+    <div class="flex flex-col flex-1 min-h-0 overflow-y-auto gap-3 px-1 sm:px-2 pb-2">
         @for (message of messageService.messageThread(); track message.id) {
         <div class="chat" [class.chat-start]="!message.currentUserSender" [class.chat-end]="message.currentUserSender">
             <div class="chat-image avatar">
-                <div class="w-10 rounded-full" [class.avatar-online]="presenceService.onlineUsers()
+                <div class="w-10 rounded-full ring-2 ring-primary/15" [class.avatar-online]="presenceService.onlineUsers()
       .includes(message.senderId)">
                     <img alt="image of user" [src]="message.senderImageUrl || '/user.png'" />
                 </div>
             </div>
-            <div class="chat-header">
+            <div class="chat-header text-sm">
                 {{message.senderDisplayName}}
                 <time class="text-xs opacity-50">{{message.messageSent | date: 'short'}}</time>
             </div>
-            <div class="chat-bubble">{{message.content}}</div>
+            <div class="chat-bubble shadow-sm"
+                [class.chat-bubble-primary]="message.currentUserSender"
+                [class.chat-bubble-base-200]="!message.currentUserSender">
+                {{message.content}}
+            </div>
             @if (message.currentUserSender && message.dateRead) {
-            <div class="chat-footer opacity-50">Seen {{message.dateRead | timeAgo}}</div>
+            <div class="chat-footer opacity-50 text-xs">Seen {{message.dateRead | timeAgo}}</div>
             } @else if (message.currentUserSender && !message.dateRead) {
-            <div class="chat-footer opacity-50">Not read</div>
+            <div class="chat-footer opacity-50 text-xs">Not read</div>
             } @else {
-            <div class="chat-footer opacity-50">Delivered</div>
+            <div class="chat-footer opacity-50 text-xs">Delivered</div>
             }
         </div>
         }
         <div #messageEndRef></div>
     </div>
-    <div class="flex join w-full">
-        <input [(ngModel)]="messageContent" class="input w-full" placeholder="Enter your message"
-            (keydown.enter)="sendMessage()">
-        <button (click)="sendMessage()" type="submit" class="btn btn-primary join-item">
-            Send
-        </button>
+    <div class="message-compose shrink-0 pt-3 border-t border-base-300/50">
+        <div
+            class="message-compose-box flex items-end gap-2 sm:gap-3 p-2 sm:p-3 rounded-2xl border border-base-300/60 bg-base-100/90 shadow-sm">
+            <textarea [(ngModel)]="messageContent" (keydown)="onKeyDown($event)" rows="1"
+                class="textarea flex-1 min-h-11 max-h-32 resize-none border-0 bg-transparent px-2 py-2.5 text-base leading-snug focus:outline-none placeholder:text-base-content/40"
+                placeholder="Write a message..."></textarea>
+            <button (click)="sendMessage()" type="button" [disabled]="!messageContent.trim()"
+                class="btn btn-primary btn-glow shrink-0 h-11 min-h-11 w-11 sm:w-auto sm:min-w-[6.5rem] rounded-full sm:rounded-xl px-0 sm:px-4 gap-0 sm:gap-2 text-primary-content"
+                aria-label="Send message">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                    <path
+                        d="M3.105 2.289a.75.75 0 0 0-.826.95l1.414 4.925A1.5 1.5 0 0 0 5.135 9.25h6.115a.75.75 0 0 1 0 1.5H5.135a1.5 1.5 0 0 0-1.442 1.086l-1.414 4.926a.75.75 0 0 0 .826.95 28.896 28.896 0 0 0 15.293-7.154.75.75 0 0 0 0-1.115A28.897 28.897 0 0 0 3.105 2.289Z" />
+                </svg>
+                <span class="hidden sm:inline font-medium">Send</span>
+            </button>
+        </div>
+        <p class="hidden sm:block text-xs text-base-content/40 mt-2 px-1">
+            Press <kbd class="kbd kbd-xs">Enter</kbd> to send, <kbd class="kbd kbd-xs">Shift</kbd>+<kbd
+                class="kbd kbd-xs">Enter</kbd> for a new line
+        </p>
     </div>
 </div>

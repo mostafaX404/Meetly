@@ -4,6 +4,8 @@ public class Photo
 {
     
     public int Id { get; set; }
+
+    [JsonPropertyName("url")]
     public required string URL { get; set; }
     public string? PublicId { get; set; }
 

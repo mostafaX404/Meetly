@@ -23,7 +23,7 @@ export class Nav implements OnInit{
   private router = inject(Router)
   private toast = inject(ToastService)
   protected creds :any ={};
-  protected selectedTheme = signal<string>(localStorage.getItem("theme")||"light")
+  protected selectedTheme = signal<string>(localStorage.getItem("theme")||"meetly")
   protected themes = themes
   protected busyService = inject(BusyService)
   protected loading = signal(false);

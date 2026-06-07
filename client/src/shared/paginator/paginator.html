@@ -1,29 +1,23 @@
-<div class="flex items-center w-full gap-3 py-3">
-  <span>Items per page:</span>
-  <select class="select w-24" (change)="onPageChange(undefined, $event.target)">
+<div class="flex items-center w-full gap-3 py-3 text-sm">
+  <span class="text-base-content/60">Per page:</span>
+  <select class="select select-sm w-20 rounded-lg" (change)="onPageChange(undefined, $event.target)">
     @for (size of pageSizeOptions(); track $index) {
-      <option [value]="size" [selected]="size === pageSize()">{{size}}</option>
+    <option [value]="size" [selected]="size === pageSize()">{{size}}</option>
     }
   </select>
 
-  <div class="text-sm">
-    {{(pageNumber() - 1) * pageSize() + 1}} - {{lastItemIndex()}} of {{totalCount()}}
+  <div class="text-base-content/60">
+    {{(pageNumber() - 1) * pageSize() + 1}} – {{lastItemIndex()}} of {{totalCount()}}
   </div>
 
-  <div class="flex items-center gap-2">
-    <button
-      class="btn btn-circle btn-ghost"
-      [disabled]="pageNumber() === 1"
-      (click)="onPageChange(pageNumber() - 1)"
-    >
-      &larr;
+  <div class="flex items-center gap-1 ml-auto">
+    <button class="btn btn-circle btn-ghost btn-sm transition-all hover:bg-primary/10" [disabled]="pageNumber() === 1"
+      (click)="onPageChange(pageNumber() - 1)">
+      ‹
     </button>
-    <button
-      class="btn btn-circle btn-ghost"
-      [disabled]="pageNumber() === totalPages()"
-      (click)="onPageChange(pageNumber() + 1)"
-    >
-      &rarr;
+    <button class="btn btn-circle btn-ghost btn-sm transition-all hover:bg-primary/10"
+      [disabled]="pageNumber() === totalPages()" (click)="onPageChange(pageNumber() + 1)">
+      ›
     </button>
   </div>
 </div>

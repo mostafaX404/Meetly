@@ -1,8 +1,23 @@
-<div class="card bg-base-100 w-1/2 mx-auto flex flex-col p-6 rounded-lg shadow-lg">
-    <div class="card-title justify-center text-3xl text-primary">Sign up</div>
-    <div class="card-body w-full">
+<div class="card glass-panel w-full max-w-lg mx-auto flex flex-col p-8 rounded-2xl shadow-2xl page-enter">
+    <div class="flex flex-col items-center mb-6">
+        <div class="flex items-center mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                class="size-8 text-primary -rotate-12">
+                <path
+                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                class="size-8 text-secondary -ml-4 rotate-6">
+                <path
+                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+        </div>
+        <div class="font-display text-3xl text-primary font-semibold">Join Meetly</div>
+        <p class="text-sm text-base-content/60 mt-1">Create your profile in two easy steps</p>
+    </div>
 
-        <ul class="steps">
+    <div class="card-body w-full p-0">
+        <ul class="steps w-full mb-8">
             <li class="step step-primary">Credentials</li>
             <li class="step" [class.step-primary]="currentStep() === 2">Profile</li>
         </ul>
@@ -12,58 +27,52 @@
             <app-text-input label="Email" formControlName="email"></app-text-input>
             <app-text-input label="Display Name" formControlName="displayName"></app-text-input>
             <app-text-input label="Password" formControlName="password" type="password"></app-text-input>
-            <app-text-input label="Confirm Password" formControlName="confirmPassword" type="password"></app-text-input>
+            <app-text-input label="Confirm Password" formControlName="confirmPassword"
+                type="password"></app-text-input>
 
-
-            <div class="flex items-center justify-end gap-3">
-                <button (click)="cancel()" type="button" class="btn">Cancel</button>
-                <button [disabled]="!credentialsForm.valid" class="btn btn-primary" (click)="nextStep()"
+            <div class="flex items-center justify-end gap-3 mt-2">
+                <button (click)="cancel()" type="button" class="btn btn-ghost">Cancel</button>
+                <button [disabled]="!credentialsForm.valid" class="btn btn-primary btn-glow" (click)="nextStep()"
                     type="submit">Next</button>
             </div>
         </form>
-
         }
 
         @if (currentStep() === 2) {
-        <form [formGroup]="profileForm" class="flex flex-col w-full gap-4 steps">
-
-            <div class="flex items-center gap-4">
-                <div class="font-semibold">Gender: </div>
-                <label class="flex gap-3 items-center">
-                    <span>Male</span>
+        <form [formGroup]="profileForm" class="flex flex-col w-full gap-4">
+            <div class="flex flex-wrap items-center gap-4">
+                <div class="font-semibold">Gender:</div>
+                <label class="flex gap-2 items-center cursor-pointer">
                     <input type="radio" formControlName="gender" value="male" class="radio radio-primary">
+                    <span>Male</span>
                 </label>
-                <label class="flex gap-3 items-center">
-                    <span>Female</span>
+                <label class="flex gap-2 items-center cursor-pointer">
                     <input type="radio" formControlName="gender" value="female" class="radio radio-primary">
+                    <span>Female</span>
                 </label>
             </div>
 
-            <app-text-input [maxDate]="getMaxDate()" type="date" label="Date of Birth" formControlName="dateOfBirth" />
+            <app-text-input [maxDate]="getMaxDate()" type="date" label="Date of Birth"
+                formControlName="dateOfBirth" />
             <app-text-input label="City" formControlName="city" />
             <app-text-input label="Country" formControlName="country" />
 
-            <div class="flex items-center justify-end gap-3">
-
-                <button (click)="prevStep()" type="button" class="btn">Back</button>
-                <button [disabled]="!profileForm.valid" (click)="register()" class="btn btn-primary"
-                    type="button">Register</button>
-
+            <div class="flex items-center justify-end gap-3 mt-2">
+                <button (click)="prevStep()" type="button" class="btn btn-ghost">Back</button>
+                <button [disabled]="!profileForm.valid" (click)="register()" class="btn btn-primary btn-glow"
+                    type="button">Create Account</button>
             </div>
         </form>
         }
-
-
     </div>
- 
-@if (validationErrors().length > 0) {
-  <div class="mt-5 flex bg-gray-200 rounded-2xl w-1/2 p-3 mx-auto">
-    <ul class="flex flex-col text-error space-y-1">
-      @for (error of validationErrors(); track $index) {
-        <li>{{error}}</li>
-      }
-    </ul>
-  </div>
-}
 
+    @if (validationErrors().length > 0) {
+    <div class="mt-5 flex bg-error/10 border border-error/20 rounded-xl w-full p-4">
+        <ul class="flex flex-col text-error space-y-1 text-sm">
+            @for (error of validationErrors(); track $index) {
+            <li>{{error}}</li>
+            }
+        </ul>
+    </div>
+    }
 </div>

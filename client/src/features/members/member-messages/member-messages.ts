@@ -57,11 +57,19 @@ loadMessages() {
     }
 }
 
+onKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        this.sendMessage();
+    }
+}
+
 sendMessage() {
     const recipientId = this.memberService.member()?.id;
-    if (!recipientId) return;
+    const content = this.messageContent.trim();
+    if (!recipientId || !content) return;
 
-    this.messageService.sendMessage(recipientId, this.messageContent)?.then(() => {
+    this.messageService.sendMessage(recipientId, content)?.then(() => {
         this.messageContent = '';
     })
 }
